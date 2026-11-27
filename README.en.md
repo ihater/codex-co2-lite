@@ -1,8 +1,8 @@
-# Co2 Lite
+# [Co2 Lite](https://github.com/ihater/codex-co2-lite)
 
-Co2 Lite is a standalone local edition derived from [Codex Co2](https://github.com/SpaceCoder-Kafka/codex-co2) `v0.6.2`. It keeps conversation selection, permanent links, text and attachment submission, link rotation, and share revocation. It removes guest admission, per-message approval, recovery requests, and the public relay.
+Co2 Lite is a standalone local edition derived from the upstream [Codex Co2](https://github.com/SpaceCoder-Kafka/codex-co2) `v0.6.2`. It keeps conversation selection, permanent links, text and attachment submission, link rotation, and share revocation. It removes guest admission, per-message approval, recovery requests, and the public relay.
 
-[简体中文](README.md)
+[Repository](https://github.com/ihater/codex-co2-lite) · [简体中文](README.md)
 
 ## Start
 
