@@ -1,0 +1,57 @@
+{
+  "name": "codex-co2-lite",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Approval-free persistent LAN sharing for Codex conversations",
+  "engines": {
+    "node": ">=22.23.3"
+  },
+  "scripts": {
+    "lite:start": "node lite/server.mjs",
+    "lite:test": "node --test lite/test/*.test.mjs",
+    "lite:install": "node lite/install-launch-agent.mjs",
+    "doctor": "node bin/coop.mjs doctor",
+    "migrate": "node bin/coop.mjs migrate",
+    "start": "node bin/coop.mjs start",
+    "stop": "node bin/coop.mjs stop",
+    "login": "node bin/coop.mjs login",
+    "probe": "node bin/coop.mjs probe",
+    "probe:desktop": "node scripts/probe-desktop-attach.mjs",
+    "ssh:remove": "node bin/coop.mjs ssh-remove",
+    "test": "node --test test/*.test.mjs",
+    "test:integration": "CODEX_COOP_INTEGRATION=1 node --test test/*.integration.test.mjs",
+    "host": "node bin/share.mjs host",
+    "relay": "node bin/share.mjs relay",
+    "demo": "node bin/share.mjs demo",
+    "build:macos": "node scripts/build-macos.mjs",
+    "check:macos": "node scripts/check-macos-bundle.mjs",
+    "build:windows": "node scripts/build-windows.mjs",
+    "check:windows": "node scripts/check-windows-bundle.mjs",
+    "updates:key": "node scripts/setup-update-key.mjs",
+    "updates:prepare": "node scripts/prepare-update.mjs",
+    "test:integration:required": "node scripts/test-integration.mjs",
+    "check:public": "node scripts/public-source.mjs",
+    "export:public": "node scripts/export-public.mjs",
+    "notices:write": "node scripts/third-party-notices.mjs --write",
+    "notices:check": "node scripts/third-party-notices.mjs",
+    "test:licenses": "python3 -m unittest discover -s test -p test_cloudflared_notices.py",
+    "build:web": "node scripts/build-web.mjs"
+  },
+  "dependencies": {
+    "markdown-it": "15.0.3",
+    "ws": "8.22.0"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "dompurify": "3.4.17",
+    "esbuild": "0.28.2",
+    "exceljs": "4.4.0",
+    "fflate": "0.8.3",
+    "highlight.js": "11.12.0",
+    "katex": "0.19.1",
+    "mermaid": "12.2.0",
+    "papaparse": "5.7.0",
+    "pdfjs-dist": "6.5.438"
+  }
+}

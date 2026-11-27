@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,interactive-widget=resizes-content">
+  <meta name="referrer" content="no-referrer">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Codex Co2 Lite 共享会话">
+  <title>Co2 Lite · 共享会话</title>
+  <link rel="stylesheet" href="/assets/co2-style.css">
+  <script type="module" src="/assets/guest.js"></script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="masthead">
+      <div class="masthead-content reading-width">
+        <div class="heading">
+          <h1 id="thread-title">共享会话</h1>
+          <span id="agent-status" class="agent-status" hidden>Agent 空闲</span>
+          <span id="viewer-name" class="sr-only"></span>
+        </div>
+        <div id="connection-status" class="status-pill" data-state="pending" role="status">
+          <span class="status-dot" aria-hidden="true"></span><span id="connection-label">连接中</span>
+        </div>
+      </div>
+    </header>
+    <main class="workspace">
+      <div class="context-bar reading-width">
+        <div id="notice" class="notice" role="status" hidden></div>
+      </div>
+      <section class="conversation-wrap" aria-labelledby="thread-title">
+        <div id="conversation" class="conversation" tabindex="0" aria-label="已共享的对话记录">
+          <div class="reading-width transcript">
+            <div id="empty" class="empty-state">
+              <span class="empty-mark" aria-hidden="true">↗</span>
+              <h2>正在同步会话</h2>
+              <p>连接后，对话内容会显示在这里。</p>
+            </div>
+            <div id="messages" class="messages"></div>
+          </div>
+        </div>
+      </section>
+      <footer class="composer reading-width">
+        <form id="proposal-form">
+          <div class="compose-box">
+            <div id="compose-attachments" class="compose-attachments" aria-live="polite" hidden></div>
+            <textarea id="proposal-text" rows="1" maxlength="8000" placeholder="补充你的想法…" disabled></textarea>
+            <input id="attachment-input" type="file" multiple hidden>
+            <div class="compose-meta">
+              <button id="attach-button" class="text-button" type="button" disabled aria-label="添加图片或附件" title="添加图片或附件，也可粘贴或拖入图片">＋</button>
+              <span id="send-mode" role="status">同步中</span>
+              <button id="send-button" class="button button-primary" type="submit" disabled aria-label="发送建议">↑</button>
+            </div>
+          </div>
+        </form>
+        <p id="proposal-feedback" class="inline-feedback submission-feedback" aria-live="polite"></p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

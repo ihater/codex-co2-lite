@@ -1,0 +1,141 @@
+# Changelog
+
+## Co2 Lite 0.1.0
+
+- Add approval-free permanent LAN sharing with stable links, atomic state, and persisted snapshots.
+- Keep shares usable across browser refreshes, service restarts, and DHCP address changes through a stable `.local` hostname.
+- Allow collaborators to send text, images, and files from the browser.
+- Add link rotation and immediate share revocation in the loopback-only manager.
+
+## 0.6.2
+
+[中文版 →](https://github.com/SpaceCoder-Kafka/codex-co2/blob/main/docs/release-notes/v0.6.2-zh.md)
+
+- **Send screenshots and files through the macOS bridge.** Admitted guests can paste a screenshot, choose files or drop them into the chat, then send them with or without text. New shares enable attachments by default when the conversation supports them. Each message can include up to 8 files, with a limit of 32 MiB per file and 64 MiB total. Originals are stored on the host’s computer. Access to ordinary files depends on where the conversation runs.
+- **Choose when a share accepts attachments.** Under **Settings → Messages and approvals**, turn off **Allow guests to send screenshots and attachments** for that share to accept only text. Turning it off cancels unfinished uploads and attachment messages still waiting to be submitted. Messages already in the Codex queue continue. Restored LAN shares keep their saved setting.
+- **Wake the conversation in the background.** After Codex accepts a guest message into its queue, Co² asks macOS to wake the shared conversation in the background. This applies to both text and attachments.
+
+## 0.6.1
+
+[中文版 →](https://github.com/SpaceCoder-Kafka/codex-co2/blob/main/docs/release-notes/v0.6.1-zh.md)
+
+Co² 0.6.1 rotates the macOS update signing key. If you use 0.6.0 or earlier, upgrade once via Homebrew or the DMG for your Mac. Subsequent in-app updates use the new key. The native update prompt now starts the download when you choose **Update and Reopen**, including when the management window is unavailable.
+
+## 0.6.0
+
+[中文版 →](https://github.com/SpaceCoder-Kafka/codex-co2/blob/main/docs/release-notes/v0.6.0-zh.md)
+
+- Add a local bridge for newer macOS Codex Desktop versions whose previous sharing interface is unavailable. On first use or after uninstalling the plugin, click **Install plugin** in the running Codex Desktop. Startup and **Reconnect Codex** use Desktop's plugin entry point without a model call or a manual command in a chat.
+- Queue text submissions through the installed official CLI while keeping execution in the existing Desktop. Reconnection never resubmits a message. This compatibility mode uses periodic updates and explicitly reports its attachment, attribution and output limits.
+- Replace a stalled session picker with actionable connection errors.
+- Recover from initial connection failures and synchronize connection changes across open managers. Retry oversized history pages with fewer turns and explicitly report any omitted execution details.
+
+## 0.5.1
+
+[中文版 →](https://github.com/SpaceCoder-Kafka/codex-co2/blob/main/docs/release-notes/v0.5.1-zh.md)
+
+Generating an invitation could fail when Codex Desktop sent a conversation snapshot larger than 16 MiB. Co² now accepts snapshots up to Desktop’s 256 MiB frame limit and continues to receive updates after the guest joins.
+
+## 0.5.0
+
+[中文版 →](https://github.com/SpaceCoder-Kafka/codex-co2/blob/main/docs/release-notes/v0.5.0-zh.md)
+
+**New Features**
+
+1. **Continue a shared chat in your own Codex.** After admission, choose **Import to my Codex** and confirm in your local Co² app to open an independent conversation in Desktop. When both apps support attachment import, the copy includes local links to downloaded originals, including messages containing only attachments. The import identifies missing files and truncated history.
+
+   - **Take over a bug investigation.** A teammate has documented how to reproduce a bug and which causes they have ruled out. Import the chat and ask Codex to suggest the next test based on those results.
+   - **Explore a second approach in parallel.** While the team works through a one-step migration in the shared chat, use your copy to plan a phased rollout under the same compatibility requirements. Your follow-up questions stay in your copy. Bring the two plans back to the team to compare.
+   - **Turn a design review into an acceptance checklist.** Before sharing ends, import the review discussion and the attached mockups. The next day, open the saved mockups and use the decisions in your copy to draft a checklist for each screen.
+
+2. **Return to a LAN conversation.** With recovery records enabled, eligible shares can resume when the host restarts. On macOS, a Bonjour invitation lets a returning guest reuse a valid approval in the same browser after the host selects a new LAN address. A numeric IP invitation is also available.
+3. **Open an invitation in multiple tabs.** Admitted guests can refresh or reopen a valid invitation. Tabs in the same browser share membership and keep separate message drafts.
+4. **Download files without a browser preview.** Open the attachment card or file link to save the original, including diagnostic files and files with no extension.
+
+**Bug Fixes**
+
+1. **Desktop compatibility and message delivery.** Support version 13 of the Desktop conversation stream and prevent duplicate guest messages in busy conversations.
+2. **Conversation and network selection.** Hide untitled and spawned threads from the session picker. Check that the guest endpoint is reachable on the selected LAN interface before offering an invitation.
+
+## 0.4.1
+
+[中文版 →](https://github.com/SpaceCoder-Kafka/codex-co2/blob/main/docs/release-notes/v0.4.1-zh.md)
+
+**Chore**
+
+1. **Smaller macOS packages**: Separate Apple Silicon and Intel packages retain bundled Node and cloudflared, with a controlled Node symbol-trimming recipe and macOS 14 compatibility.
+2. **Runtime-only dependencies**: Keep browser preview resources while excluding frontend build dependencies, source maps, demos, tests and development files from service distributions. Windows x64 uses the same runtime dependency allowlist.
+3. **Architecture-specific updates**: New macOS packages use independent update feeds. Existing Universal users manually replace the application once, preserving their data.
+
+## 0.4.0
+
+[中文版 →](https://github.com/SpaceCoder-Kafka/codex-co2/blob/main/docs/release-notes/v0.4.0-zh.md)
+
+**New Features**
+
+1. **Guest file uploads**: Select, paste or drop files and send attachment-only messages through the existing admission and message-approval flow. Upload up to 8 files per message, 32 MiB per file and 64 MiB total through acknowledged chunks and private host storage. Images use native image input; other files use Desktop attachment references.
+2. **Desktop-style attachment composer**: Browse attachments in a horizontal strip above the text input. Supported images, videos, documents and text show local previews; other files show a type icon and filename. Removing, sending or disconnecting releases preview resources.
+3. **Document cards and legacy Office downloads**: Show common document attachments and standalone generated documents as compact file cards. Download original DOC, XLS and PPT files with a clear notice when browser preview is unavailable.
+
+**Bug Fixes**
+
+1. **Duplicate image attachments**: Hide a redundant file card when the same structured image is displayed. Image zoom and download remain available; unavailable images retain an original-file fallback. Video cards keep their existing behavior.
+2. **File presentation**: Keep filenames, format badges and link labels on document cards while preserving inline links in ordinary prose. A display label or matching filename never grants file access or suppresses an unrelated attachment.
+3. **Sender labels**: Preserve host and collaborator attribution when Desktop turns become persistent or a conversation is shared again. Earlier unconfirmed guest submissions no longer block unrelated native host input; messages without sufficient attribution evidence remain unknown.
+
+Audio understanding depends on Desktop and model support. Remote/cloud execution without host-file transfer remains unavailable. Native Desktop acceptance is still pending; synthetic transport and browser checks do not establish full file-type parity.
+
+## 0.3.0
+
+[中文版 →](https://github.com/SpaceCoder-Kafka/codex-co2/blob/main/docs/release-notes/v0.3.0-zh.md)
+
+**New Features**
+
+1. **More artifact previews**: View assistant file outputs and attachments as audio, PDF, CSV/TSV, XLSX, Markdown, DOCX and PPTX, and download their original bytes. Office previews show common text, tables and embedded images with clear fallbacks for complex content.
+2. **Rich text rendering**: Read formulas, Mermaid diagrams and highlighted code with source-view controls and self-hosted preview resources.
+3. **Read-only activity cards**: Expand tool results, command output, file changes and plans supplied by Desktop IPC. Native approvals remain with the host; available states and results depend on Desktop's interface.
+4. **Desktop-style conversation layout**: Read black sender bubbles, expandable long messages and compact activity summaries. Completed work folds separately from final replies, and explicit disclosure choices survive live updates.
+
+**Bug Fixes**
+
+1. **Conversation completeness**: Restore user instructions explicitly delivered from another chat and local Desktop history overlays. Keep direct replies to mid-turn answers visible; prioritize change and plan cards within the snapshot budget and show when older activity rows are omitted. Large histories no longer exhaust preview entry bookkeeping and leave blank cards.
+2. **Native conversation presentation**: Read question replies and plan confirmations without protocol envelopes, retain messages sent during a run, and use one disclosure per turn. File links keep their labels and inline positions; change summaries merge by turn and use project-relative paths. Native timestamps and ChatGPT provenance appear when available.
+
+## 0.2.0
+
+[中文版 →](https://github.com/SpaceCoder-Kafka/codex-co2/blob/main/docs/release-notes/v0.2.0-zh.md)
+
+**New Features**
+
+1. **More desktop packages**: Choose Universal macOS 14+ or Windows 10 1809+/11 x64 setup and portable packages. Windows requires WebView2 and manual updates.
+2. **Request invitation recovery**: Request host-approved recovery for expired or interrupted shares while the original entry remains reachable.
+3. **Background sharing and LAN recovery**: On macOS, system-approved background running keeps sharing active after the manager closes. LAN restarts retain pending recovery requests when the original address and port remain available.
+
+**Bug Fixes**
+
+1. **macOS startup recovery (Build 27)**: Ad-hoc signed packages reuse an existing service or run with the management app, avoiding repeated rejected background launches. Quitting pauses foreground sharing; saved LAN recovery records remain available when enabled. Startup failures distinguish timeouts from process exit codes.
+
+**Chore**
+
+1. **Local access protection**: Check user identity, file permissions and attachment paths to reduce unauthorized access.
+
+## 0.1.0
+
+[中文版 →](https://github.com/SpaceCoder-Kafka/codex-co2/blob/main/docs/release-notes/v0.1.0-zh.md)
+
+**New Features**
+
+1. **Share a Codex conversation**: Collaborate in a browser after host approval, without repeatedly forwarding context.
+2. **Preview images and attachments**: View images, videos and text in place, within supported format and size limits.
+3. **Control sharing scope and expiry**: Choose public or LAN sharing and set LAN invitation lifetimes to fit each collaboration.
+4. **Collaboration notifications**: Track join requests, pending messages and run completion; system notifications require permission.
+5. **In-app updates**: Check the installed version and choose when to update, without searching for downloads.
+
+**Bug Fixes**
+
+1. **Keep message authors**: Preserve observed author labels across resharing and app restarts.
+2. **Connection progress feedback**: Show check and rebuild progress and block repeated clicks.
+
+**Chore**
+
+1. **Simpler installation and verification**: Provide installers, checksums and license notices to reduce manual setup. Hosts require Apple Silicon and macOS 15+.

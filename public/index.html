@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content">
+    <meta name="referrer" content="no-referrer">
+    <meta name="color-scheme" content="light">
+    <meta name="description" content="Codex Co² — 共享一条 Codex 会话，一起推进工作。">
+    <title>Codex Co² · 共享会话</title>
+    <link rel="stylesheet" href="/style.css">
+    <script defer src="/vendor/markdown-it.min.js"></script>
+    <script defer src="/markdown.js"></script>
+    <script defer src="/images.js"></script>
+    <script defer src="/notifications.js"></script>
+    <script defer src="/invite-recovery.js"></script>
+    <script type="module" src="/guest.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="masthead">
+        <div class="masthead-content reading-width">
+          <div class="heading"><h1 id="thread-title">共享会话</h1><span id="agent-status" class="agent-status" hidden>Agent 空闲</span></div>
+          <button id="import-to-codex" class="button import-to-codex" type="button" aria-haspopup="dialog" aria-controls="codex-import-dialog" hidden>导入到我的 Codex</button>
+          <div class="collaboration">
+            <button id="collaboration-toggle" class="collaboration-toggle" type="button" aria-expanded="false" aria-controls="collaboration-panel">协作详情 <span aria-hidden="true">⌄</span></button>
+            <div id="collaboration-panel" class="collaboration-panel" data-view="menu" role="dialog" aria-label="协作详情" hidden>
+              <div id="collaboration-navigation" class="panel-navigation" hidden><button id="collaboration-back" class="text-button" type="button">‹ 协作详情</button><button id="collaboration-close" class="close-button" type="button" aria-label="关闭协作详情">×</button></div>
+              <div id="collaboration-menu" class="collaboration-menu">
+                <button id="open-proposals" class="collaboration-entry" type="button"><span><strong>查看我的提交</strong><small id="submission-summary">暂无提交</small></span><span aria-hidden="true">›</span></button>
+                <button id="open-backup" class="collaboration-entry" type="button" disabled><span><strong>备份身份</strong><small id="backup-summary">身份确认后可用</small></span><span aria-hidden="true">›</span></button>
+                <button id="open-help" class="collaboration-entry" type="button"><span><strong>使用帮助</strong><small>快捷键、草稿与连接说明</small></span><span aria-hidden="true">›</span></button>
+              </div>
+              <section id="collaboration-proposals" class="panel-view" hidden>
+                <h2>我的提交</h2><p class="field-help">提交状态不代表 Agent 已执行。</p>
+                <p id="proposals-empty" class="panel-empty">还没有提交。回到对话，发送你的第一条消息。</p>
+                <section id="proposals-panel" hidden><span id="proposal-count" class="sr-only">0</span><ol id="proposals" class="proposals"></ol></section>
+              </section>
+              <section id="collaboration-backup" class="panel-view" hidden>
+                <h2>备份身份</h2><p class="card-description">当前身份：<span id="backup-name"></span></p>
+                <p id="backup-unavailable" class="field-help">当前没有可用的身份备份，请重新打开有效邀请。</p>
+                <section id="recovery-panel" hidden>
+                  <p id="identity-notice" class="backup-introduction" role="status" hidden></p>
+                  <button id="download-recovery" class="button button-primary backup-download" type="button">下载恢复文件</button>
+                  <p class="privacy-note">恢复文件仅供你本人使用，请勿转发。</p>
+                  <p id="recovery-feedback" class="inline-feedback" role="status"></p>
+                  <details id="manual-recovery" class="recovery-entry"><summary>其他备份方式：使用恢复凭据</summary><label class="sr-only" for="recovery-code">个人恢复凭据</label><input id="recovery-code" type="password" readonly autocomplete="off"><button id="copy-recovery" class="button" type="button">复制恢复凭据</button></details>
+                  <p id="recovery-note" class="field-help"></p><p class="privacy-note">停止共享、移除协作者或准入到期后，备份失效。</p>
+                </section>
+              </section>
+              <section id="collaboration-help" class="panel-view" hidden>
+                <h2>使用帮助</h2>
+                <section class="help-section"><h3>任务提醒</h3><p id="notification-status" role="status">开启浏览器通知，长任务结束时提醒你。</p><button id="notification-toggle" class="button" type="button">开启浏览器通知</button> <button id="notification-test" class="button" type="button" disabled>发送测试通知</button><p>批准加入后自动尝试申请通知权限；浏览器拦截时可点击开启。需保留页面并保持连接；网页在前台时只显示页内提醒。更换网站地址后需重新允许通知。</p></section>
+                <section class="help-section"><h3>输入与发送</h3><p id="keyboard-help">Enter 发送，Shift+Enter 换行。</p><p id="proposal-help">正在同步消息接收设置…</p></section>
+                <section class="help-section"><h3>草稿与连接</h3><p id="draft-help">未发送的草稿保存在当前标签页；断线后自动尝试重连，已发送消息不会自动重发。</p><div id="connection-status" class="status-pill" data-state="neutral" role="status"><span class="status-dot" aria-hidden="true"></span><span id="connection-label">尚未连接</span></div><p id="sync-label">等待同步</p></section>
+                <section id="member-panel" class="help-section" hidden><h3>参与信息</h3><p class="member-identity"><span id="member-avatar" class="avatar" aria-hidden="true">访</span><span id="member-name"></span><span id="member-title">你已加入</span></p><p id="member-description"></p></section>
+                <section class="help-section"><h3>共享边界</h3><p>仅共享这一条会话，任务在分享者的电脑上执行。</p><p>可刷新或收藏此页，在同一浏览器返回。地址栏里是完整邀请，请只向受邀协作者转发。</p><div id="history-note" class="history-note" hidden></div></section>
+                <section class="help-section"><h3>关于 Co²</h3><p>Codex Co² 是开源项目，可让你分享自己的 Codex 会话。<a id="help-project-link" href="https://github.com/SpaceCoder-Kafka/codex-co2" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">在 GitHub 查看</a></p></section>
+                <p class="panel-brand">Codex Co²</p>
+              </section>
+            </div>
+          </div>
+        </div>
+      </header>
+      <dialog id="codex-import-dialog" class="codex-import-dialog" aria-labelledby="codex-import-heading">
+        <div class="codex-import-heading"><h2 id="codex-import-heading">导入到我的 Codex</h2><button id="close-codex-import" class="close-button" type="button" aria-label="关闭导入窗口">×</button></div>
+        <p>导入需要在电脑上安装 Co² 和 Codex Desktop。安装后回到此页继续。</p>
+        <p id="codex-import-scope" class="field-help"></p>
+        <p class="field-help">分享者和访客都需使用支持附件导入的 Co²。可下载的原件会保存到你的电脑，文件链接会出现在对应消息中。未能保存的附件也会在消息中标明。</p>
+        <div class="codex-import-actions">
+          <a id="download-co2" href="https://github.com/SpaceCoder-Kafka/codex-co2" class="button button-primary" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">前往 GitHub 下载 Co²</a>
+          <button id="retry-codex-import" class="button" type="button">已安装，打开 Co²</button>
+        </div>
+        <p id="codex-import-status" role="status"></p>
+      </dialog>
+      <main class="workspace">
+        <div class="context-bar reading-width">
+          <div id="notice" class="notice" role="status" hidden></div>
+          <section id="join-panel" class="join-card" aria-labelledby="join-title">
+            <h2 id="join-title">加入这条会话</h2><p class="card-description">共享一条 Codex 会话，一起推进工作。</p>
+            <form id="join-form"><label class="sr-only" for="display-name">显示名称</label><div class="join-row"><input id="display-name" name="display-name" type="text" maxlength="80" placeholder="你的显示名称" autocomplete="nickname" required aria-describedby="name-help"><button id="join-button" class="button button-primary" type="submit">申请加入</button></div><p id="name-help" class="field-help">最多 40 个字符，分享者确认后即可加入。</p><details class="recovery-entry"><summary>换浏览器或换域名？恢复已加入的身份</summary><p class="field-help">同一浏览器会自动读取这个网站保存的身份。使用相同的 .local 名称和端口时，分享电脑换 IP 后也能自动恢复。更换浏览器、网站地址或清理存储后，可以使用下方备份。</p><label for="import-recovery">选择此前保存的恢复文件</label><input id="import-recovery" type="file" accept=".json,application/json"><label for="recovery-input">或粘贴备用恢复凭据</label><input id="recovery-input" type="password" maxlength="43" autocomplete="off" placeholder="首次加入无需填写"><p class="field-help">首次加入不用填写。没有恢复文件或凭据也可以填写显示名称，由分享者重新确认加入。</p></details></form>
+            <p id="join-feedback" class="inline-feedback" aria-live="polite"></p>
+            <p class="powered-by">由开源项目 <a id="powered-by-link" href="https://github.com/SpaceCoder-Kafka/codex-co2" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Codex Co²</a> 提供 · 也想分享自己的 Codex 会话？</p>
+          </section>
+          <section id="invite-recovery-panel" class="join-card invite-recovery-card" aria-labelledby="invite-recovery-title" hidden>
+            <h2 id="invite-recovery-title">恢复邀请</h2><p id="invite-recovery-description" class="card-description"></p>
+            <form id="invite-recovery-form" hidden><label class="sr-only" for="invite-recovery-name">申请昵称</label><div class="join-row"><input id="invite-recovery-name" type="text" maxlength="80" placeholder="你的显示名称" autocomplete="nickname" required><button id="invite-recovery-button" class="button button-primary" type="submit">请求恢复邀请</button></div><p class="field-help">昵称由你填写，供分享者确认本次申请。</p></form>
+            <p id="invite-recovery-feedback" class="inline-feedback" role="status"></p><p id="invite-recovery-storage" class="field-help" hidden></p>
+          </section>
+          <button id="reconnect-button" class="button context-action" type="button" hidden>重新申请连接</button>
+          <div id="identity-warning" class="notice" data-kind="warning" role="status" hidden>浏览器未能长期保存身份，请保存一份备份。<button id="open-backup-warning" class="text-button" type="button">备份身份</button></div>
+        </div>
+        <section class="conversation-wrap" aria-labelledby="thread-title">
+          <div id="conversation" class="conversation" tabindex="0" aria-label="已共享的对话记录">
+            <div class="reading-width transcript">
+              <div id="empty-state" class="empty-state"><span class="empty-mark" aria-hidden="true">↗</span><h2 id="empty-title">从一个邀请开始</h2><p id="empty-description">填写显示名称，等待分享者确认。<br>加入后，共享的对话会显示在这里。</p></div>
+              <div id="messages" class="messages"></div>
+            </div>
+          </div>
+          <aside id="task-toast" class="task-toast" role="status" hidden><p id="task-toast-text"></p><div class="toast-actions"><button id="task-toast-action" class="text-button" type="button">查看结果</button><button id="task-toast-dismiss" class="close-button" type="button" aria-label="关闭任务提醒">×</button></div></aside>
+          <button id="new-replies-button" class="new-replies-button" type="button" hidden>有新回复，查看 ↓</button>
+        </section>
+        <footer class="composer reading-width">
+          <form id="proposal-form"><label class="sr-only" for="proposal-text">建议内容</label><div class="compose-box"><div id="compose-attachments" class="compose-attachments" aria-live="polite" hidden></div><textarea id="proposal-text" name="proposal-text" rows="1" maxlength="8000" placeholder="补充你的想法…" disabled aria-describedby="send-mode keyboard-help draft-help"></textarea><input id="attachment-input" type="file" multiple hidden><div class="compose-meta"><button id="attach-button" class="text-button" type="button" disabled aria-label="添加截图或附件" title="连接共享会话后可查看附件设置">＋</button><span id="character-count" hidden>0 / 8,000</span><span id="send-mode" role="status">同步中</span><button id="send-button" class="button button-primary" type="submit" disabled aria-label="发送建议">↑</button></div></div></form>
+          <p id="proposal-feedback" class="inline-feedback submission-feedback" aria-live="polite"></p>
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>

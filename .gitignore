@@ -1,0 +1,45 @@
+node_modules/
+.coop/
+.lite-data/
+.DS_Store
+*.log
+.idea
+
+dist/
+
+# Private configuration, credentials and diagnostic/export artifacts.
+.env
+.env.*
+!.env.example
+.npmrc
+*.pem
+*.key
+*.p12
+*.pfx
+*.sqlite
+*.sqlite-*
+*.db
+*.db-*
+*.jsonl
+*.ndjson
+*.har
+*.zip
+*.dmg
+*.tar.gz
+*.download
+coverage/
+__pycache__/
+.venv/
+
+# Windows build outputs stay out of source exports.
+windows/bin/
+windows/obj/
+*.exe
+*.msi
+*.pdb
+*.nupkg
+
+assets/feedback-demo
+
+# Generated from locked web-preview dependencies.
+public/vendor/

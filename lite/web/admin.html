@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Co2 Lite 管理后台</title>
+  <link rel="stylesheet" href="/assets/app.css">
+  <script type="module" src="/assets/admin.js"></script>
+</head>
+<body class="admin-page">
+  <header class="topbar">
+    <div><strong>Co2 Lite</strong><span class="subtle">会话共享管理</span></div>
+    <div class="status-line"><span id="desktop-dot" class="dot"></span><span id="desktop-status">连接中</span><button id="reconnect" class="icon-button" title="重新连接 Codex" aria-label="重新连接 Codex">↻</button></div>
+  </header>
+  <main class="admin-layout">
+    <section class="panel sessions" aria-labelledby="sessions-title">
+      <div class="section-heading"><h1 id="sessions-title">选择会话</h1><button id="reload-threads" class="icon-button" title="刷新会话" aria-label="刷新会话">↻</button></div>
+      <label class="search"><span class="sr-only">搜索会话</span><input id="search" type="search" placeholder="搜索标题或目录"></label>
+      <div id="thread-list" class="thread-list" role="listbox"></div>
+      <form id="share-form" class="share-form">
+        <input id="selected-thread" type="hidden">
+        <label>协作者名称<input id="viewer-name" maxlength="40" value="协作者" required></label>
+        <button id="share-button" class="primary" type="submit" disabled>生成永久链接</button>
+      </form>
+      <p id="share-feedback" class="feedback" role="status"></p>
+    </section>
+    <section class="panel shares" aria-labelledby="shares-title">
+      <div class="section-heading"><h2 id="shares-title">共享会话</h2><span id="share-count" class="count">0</span></div>
+      <div id="share-list" class="share-list"></div>
+      <p id="shares-empty" class="empty">暂无共享会话</p>
+    </section>
+  </main>
+</body>
+</html>
