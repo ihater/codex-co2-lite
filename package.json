@@ -4,6 +4,14 @@
   "private": true,
   "type": "module",
   "description": "Approval-free persistent LAN sharing for Codex conversations",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ihater/codex-co2-lite.git"
+  },
+  "homepage": "https://github.com/ihater/codex-co2-lite#readme",
+  "bugs": {
+    "url": "https://github.com/ihater/codex-co2-lite/issues"
+  },
   "engines": {
     "node": ">=22.23.3"
   },

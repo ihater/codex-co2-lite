@@ -125,7 +125,7 @@ function updateAction(action, extra = {}) {
 function openProjectLink(link) {
   if (!['repository', 'releases'].includes(link)) return;
   if (updateAction('openLink', { link })) return;
-  window.open?.(`https://github.com/SpaceCoder-Kafka/codex-co2${link === 'releases' ? '/releases' : ''}`, '_blank', 'noopener,noreferrer');
+  window.open?.(`https://github.com/ihater/codex-co2-lite${link === 'releases' ? '/releases' : ''}`, '_blank', 'noopener,noreferrer');
 }
 function renderAbout() {
   const native = Boolean(nativeUpdates), supported = native && appInfo?.canUpdate === true;

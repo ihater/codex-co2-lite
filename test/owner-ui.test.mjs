@@ -1276,9 +1276,9 @@ test('About shows source metadata without native capabilities, opens fixed links
   assert.ok(e['about-update-message'].textContent.includes('GitHub'));
   e['about-repository'].onclick(); e['about-releases'].onclick(); e['about-star-link'].onclick();
   assert.deepEqual(page.links, [
-    ['https://github.com/SpaceCoder-Kafka/codex-co2', '_blank', 'noopener,noreferrer'],
-    ['https://github.com/SpaceCoder-Kafka/codex-co2/releases', '_blank', 'noopener,noreferrer'],
-    ['https://github.com/SpaceCoder-Kafka/codex-co2', '_blank', 'noopener,noreferrer'],
+    ['https://github.com/ihater/codex-co2-lite', '_blank', 'noopener,noreferrer'],
+    ['https://github.com/ihater/codex-co2-lite/releases', '_blank', 'noopener,noreferrer'],
+    ['https://github.com/ihater/codex-co2-lite', '_blank', 'noopener,noreferrer'],
   ]);
   e['dismiss-star'].onclick();
   assert.equal(e['about-star'].hidden, true);
