@@ -1,6 +1,6 @@
 # [Co2 Lite](https://github.com/ihater/codex-co2-lite)
 
-Co2 Lite 是基于上游 [Codex Co2](https://github.com/SpaceCoder-Kafka/codex-co2) `v0.6.2` 的独立本地简化版。它只保留会话选择、永久链接、消息与附件提交、停止分享，不包含访客加入审批、消息审批、邀请恢复申请或公网中继。
+[Co2 Lite](https://github.com/ihater/codex-co2-lite) 源自 Codex Co2 `v0.6.2`，是独立本地简化版。它只保留会话选择、永久链接、消息与附件提交、停止分享，不包含访客加入审批、消息审批、邀请恢复申请或公网中继。
 
 [项目仓库](https://github.com/ihater/codex-co2-lite) · [English](README.en.md)
 
